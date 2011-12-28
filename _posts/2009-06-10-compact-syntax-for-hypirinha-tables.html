@@ -1,0 +1,44 @@
+---
+layout: post
+title: Compact syntax for Hypirinha tables
+published: 1
+---
+ <p>When you're designing a builder API, you have to decide what to return from each method call.  In <a href="http://code.google.com/p/hypirinha/">Hypirinha</a> I made a choice early on that most methods should add a new child element, and return that new child element.  This is optimal for trees that are deeply nested but where siblings are rare, and it's a reasonable compromise for most HTML.  (If if I wanted to optimised for very wide trees, where nesting is rare, I would instead make methods return the parent node so that chained method calls create siblings.)
+</p>
+<p>I had a dilemma about what the special text() method should return.  It's slightly different from other methods on an element because in XML terms it creates a <em>text node</em> instead of an <em>element node</em>.  I decided for the first release to have a Java type for text nodes and to return this type from the text method.  This seemed logically consistent with all the other methods, which return the object they create. It would also allow me to add behaviour to the Text class if I found something useful for it to do.
+</p>
+<p>I've been using Hypirinha in a real application for a few months now.  Mostly it's used to produce simple status pages, for example showing how many messages are in a particular state.  I found we were writing a lot of simple HTML tables, and they were more verbose than I would have liked.  For example:
+</p>
+
+<pre class="prettyprint">        Table table = table();
+        Tr headerRow = table.tr();
+        headerRow.th().text("State");
+        headerRow.th().text("Number of messages");
+
+        for (MessageState state : counts.keySet()) {
+            Tr row = table.tr();
+            row.td().text(state.name());
+            row.td().text(valueOf(counts.get(state)));
+        }
+</pre>
+
+<p>It seems a shame to have to store the Tr objects as variables.  The problem was having to call text() on the Td and Th objects; because it returned Text I couldn't use the convenience contains() method that was designed for these occasional sibling element cases.</p>
+
+<p>On reflection, I realised I still hadn't found anything useful for the Text type to do, so it was fair to drop it.  I changed text() to return the parent element instead of the new text node, and the problem's solved:</p>
+
+<pre class="prettyprint">        Table table = table();
+        table.tr().contains(th().text("State"),
+                th().text("Number of messages"));
+
+        for (MessageState state : counts.keySet()) {
+            table.tr().contains(td().text(state.name()),
+                    td().text(valueOf(counts.get(state))));
+        }
+</pre>
+
+<p>The change has found its way into <a href="http://groups.google.com/group/hypirinha-users/browse_thread/thread/580b13fbbf42cd48">Hypirinha 0.3</a>.  I'm sure there'll be a few more small tweaks as we get further along using the library in anger.</p>
+
+
+
+
+

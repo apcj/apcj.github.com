@@ -1,0 +1,7 @@
+---
+layout: post
+title: HTML to Hypirinha, via Google App Engine
+published: 1
+---
+<p>Some weeks ago <a href="http://wuetender-junger-mann.de/wordpress/">Felix</a> sent me a small app he&#39;d written to parse HTML and generate Java source code that would build the same HTML using Hypirinha.&#0160; I packaged it up so that it would run on the new <a href="http://code.google.com/appengine/docs/java/overview.html">Java flavour of Google App Engine</a> and deployed it here:</p><p><a href="http://hypirinha.appspot.com/html2hypirinha">http://hypirinha.appspot.com/html2hypirinha</a></p><p>The source code is here:</p><p><a href="http://hypirinha.googlecode.com/svn/trunk/java-extras/html2hypirinha">http://hypirinha.googlecode.com/svn/trunk/java-extras/html2hypirinha</a></p><p>I think it&#39;s a really nice facility because it quickly gives you a feel for what Hypirinha syntax looks like.&#0160; If you were actually writing an application using Hypirinha, it gives you an easy starting point - just point the app at some a page you like the look of, and then copy and paste the code into your IDE.&#0160; For example, check out the builder for the <a href="http://www.guardian.co.uk/">Guardian home page</a>:</p><p><a href="http://hypirinha.appspot.com/html2hypirinha?url=http%3A%2F%2Fwww.guardian.co.uk%2F">http://hypirinha.appspot.com/html2hypirinha?url=http%3A%2F%2Fwww.guardian.co.uk%2F</a></p><p>Once you&#39;ve pasted the code, the real power begins - lean on your IDE&#39;s refactoring tools to remove duplication and introduce abstractions.</p>
+

@@ -1,0 +1,9 @@
+---
+layout: default
+---
+<div id="post">
+  <h2 class="date-header">{{ page.date | date:"%A, %e %B %Y" }}</h2>
+  <h2 class="title-header"><a href="{{ post.url }}">{{ page.title }}</a></h2>
+  {{ content }}
+  <hr />
+</div>
