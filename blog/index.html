@@ -3,21 +3,45 @@ layout: posts
 title: Alistair Jones
 ---
 
-<div id="home">
-
-  {% for post in site.posts limit: 5 %}
-    <div class="front">
-      <h2 class="date-header">{{ post.date | date:"%A, %e %B %Y" }}</h2>
-      <h2 class="title-header"><a href="{{ post.url }}">{{ post.title }}</a></h2>
-      {{ post.content }}
-    </div>
-  {% endfor %}
-
-  <h1>Older Posts</h1>
-  <ul class="posts">
-    {% for post in site.posts offset:5 %}
-      <li><span class="post_date">{{ post.date | date_to_string }}</span> &raquo; <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
-
+{% for post in site.posts limit: 5 %}
+<div class="row">
+  <div class="span7 offset2">
+    <h2>{{ post.title }}</h2>
+  </div>
 </div>
+<div class="row">
+  <div class="span2">
+    <p class="text-right"><em>{{ post.date | date_to_string }}</em></p>
+  </div>
+  <div class="span7">
+    {{ post.content }}
+    <p>
+      <a href="{{ post.url }}#disqus_thread"></a>
+    </p>
+  </div>
+</div>
+<hr>
+{% endfor %}
+
+<h1>Older Posts</h1>
+{% for post in site.posts offset:5 %}
+<div class="row">
+  <div class="span2">
+    <p class="text-right"><em>{{ post.date | date_to_string }}</em></p>
+  </div>
+  <div class="span7">
+    <p><a href="{{ post.url }}">{{ post.title }}</a></p>
+  </div>
+</div>
+{% endfor %}
+
+<script type="text/javascript">
+  var disqus_shortname = 'alistairjones';
+
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
